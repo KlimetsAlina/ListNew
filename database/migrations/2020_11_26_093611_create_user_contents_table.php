@@ -14,8 +14,9 @@ class CreateUserContentsTable extends Migration
     public function up()
     {
         Schema::create('user_contents', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('userId');
+            $table->integer('contentId');
+            $table->boolean('watched');
         });
     }
 
