@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use const App\Http\Controllers\RandomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +16,9 @@ use const App\Http\Controllers\RandomController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/films', 'ContentController@getFilms');
+Route::get('/serials', 'ContentController@getSerials');
+Route::get('/books', 'ContentController@getBooks');
+Route::get('/music', 'ContentController@getMusic');
+Route::get('/other', 'ContentController@getOther');
