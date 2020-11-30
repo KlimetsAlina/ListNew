@@ -17,8 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/films', 'ContentController@getFilms');
-Route::get('/serials', 'ContentController@getSerials');
-Route::get('/books', 'ContentController@getBooks');
-Route::get('/music', 'ContentController@getMusic');
-Route::get('/other', 'ContentController@getOther');
+Route::get('/{type}', 'ContentController@getContent')->where(['type' => '|film|serial|book|music|other']);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
