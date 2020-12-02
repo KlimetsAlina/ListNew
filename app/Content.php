@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Content
  *
- * @property int $id
+ * @property int    $id
  * @property string $name
  * @property string $author
  * @property string $type
@@ -35,4 +36,13 @@ class Content extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * Юзеры, имеющие этот контент
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_contents', 'contentId', 'userId')->withPivot('watched');
+    }
 }

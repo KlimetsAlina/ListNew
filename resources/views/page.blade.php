@@ -13,9 +13,9 @@
 <nav>
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="films">Фильмы</a></li>
-        <li><a href="serials">Сериалы</a></li>
-        <li><a href="books">Книги</a></li>
+        <li><a href="film">Фильмы</a></li>
+        <li><a href="serial">Сериалы</a></li>
+        <li><a href="book">Книги</a></li>
         <li><a href="music">Музыка</a></li>
         <li><a href="other">Другое</a></li>
     </ul>

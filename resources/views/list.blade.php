@@ -20,9 +20,13 @@
                 </h2>
                 <ul>
                     @foreach($content as $item)
-                        <li>
-                            {{ $item->name }} <a class="del_a" onclick="select_content(this);"></a>
-                        </li>
+                        @if($item->pivot->watched)
+                            <li>
+                                {{ $item->name }}
+                                @if($item->author)- {{$item->author}}  @endif
+                                <a class="del_a" onclick="select_content(this);"></a>
+                            </li>
+                        @endif
                     @endforeach
                     <?php
                     //    Старинная реализация
@@ -52,7 +56,13 @@
                 </h2>
                 <ul>
                     @foreach($content as $item)
-                        <li>{{ $item->name }} <a class="del_a" onclick="select_content(this);"></a></li>
+                        @if(!$item->pivot->watched)
+                            <li>
+                                {{ $item->name }}
+                                @if($item->author)- {{$item->author}}  @endif
+                                <a class="del_a" onclick="select_content(this);"></a>
+                            </li>
+                        @endif
                     @endforeach
                     <li id="show0" onclick="setwatch(0)"> +</li>
                 </ul>
