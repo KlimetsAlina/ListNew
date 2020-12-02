@@ -12,16 +12,15 @@ class ContentSeed extends Seeder
     public function run()
     {
         DB::table('content')->insert([
-            ['name' => 'Leon', 'author' => '', 'type' => 'film'],
-            ['name' => 'Игрок', 'author' => 'Федор Достоевский', 'type' => 'book'],
-            ['name' => 'Записки из мертвого дома', 'author' => 'Федор Достоевский', 'type' => 'book'],
-            ['name' => 'POWER UP', 'author' => 'AC/DC', 'type' => 'music'],
-            ['name' => 'amo', 'author' => 'Bring Me The Horizon
-', 'type' => 'music'],
-            ['name' => 'Очень странные дела', 'author' => '', 'type' => 'serial'],
-            ['name' => 'Бесы', 'author' => '', 'type' => 'serial'],
-            ['name' => 'Конь Бо-Джек', 'author' => '', 'type' => 'serial'],
-            ['name' => 'Как ухаживать за цветком', 'author' => '', 'type' => 'other'],
+            ['name' => 'Leon', 'author' => '', 'type' => 'film', 'something' => '{}'],
+            ['name' => 'Игрок', 'author' => 'Федор Достоевский', 'type' => 'book', 'something' => '{}'],
+            ['name' => 'Записки из мертвого дома', 'author' => 'Федор Достоевский', 'type' => 'book', 'something' => '{}'],
+            ['name' => 'POWER UP', 'author' => 'AC/DC', 'type' => 'music', 'something' => '{}'],
+            ['name' => 'amo', 'author' => 'Bring Me The Horizon', 'type' => 'music', 'something' => '{}'],
+            ['name' => 'Очень странные дела', 'author' => '', 'type' => 'serial', 'something' => '{}'],
+            ['name' => 'Бесы', 'author' => '', 'type' => 'serial', 'something' => '{}'],
+            ['name' => 'Конь Бо-Джек', 'author' => '', 'type' => 'serial', 'something' => '{}'],
+            ['name' => 'Как ухаживать за цветком', 'author' => '', 'type' => 'other', 'something' => '{}'],
         ]);
     }
 }

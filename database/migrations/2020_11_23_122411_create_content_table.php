@@ -16,8 +16,9 @@ class CreateContentTable extends Migration
         Schema::create('content', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('author');
+            $table->string('author')->default('');
             $table->string('type');
+            $table->json('something');
         });
     }
 
