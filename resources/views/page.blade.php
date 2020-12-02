@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>List</title> <!-- Зависит от страницы -->
+    <title>{{$contentType}}</title> <!-- TODO -->
 
     {{-- STYLE   --}}
     <link rel="stylesheet" href="/css/style.css">
@@ -12,12 +12,11 @@
 <body>
 <nav>
     <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="film">Фильмы</a></li>
-        <li><a href="serial">Сериалы</a></li>
-        <li><a href="book">Книги</a></li>
-        <li><a href="music">Музыка</a></li>
-        <li><a href="other">Другое</a></li>
+        @foreach($menu as $element)
+            <li {{ (Request::path() === $element->link) ? "class=selected" : '' }}>
+                <a href="{{ $element->link }}">{{ $element->name }}</a>
+            </li>
+        @endforeach
     </ul>
 </nav>
 

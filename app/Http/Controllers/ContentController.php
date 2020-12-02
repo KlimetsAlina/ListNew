@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Menu;
 use App\User;
 
 class ContentController extends Controller
@@ -14,6 +15,7 @@ class ContentController extends Controller
         return view('list', [
             'contentType' => $type,
             'content'     => $userContent,
+            'menu'        => Menu::all(),
         ]);
     }
 }
