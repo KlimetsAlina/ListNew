@@ -22,3 +22,5 @@ Route::get('/{type}', 'ContentController@getContent')->where(['type' => '|film|s
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/addContent', 'ContentController@addContent');

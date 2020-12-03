@@ -9,8 +9,10 @@
             <ul class="navbar-nav mr-auto">
                 @if($menu ?? '')
                     @foreach($menu as $element)
-                        <li class="nav-item" {{ (Request::path() === $element->link) ? "class=selected" : '' }}>
-                            <a class="nav-link js-scroll-trigger" href="{{ $element->link }}">{{ $element->name }}</a>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger {{ (Request::path() === $element->link) ? 'active' : '' }}" href="{{ $element->link }}">
+                                {{ $element->name }}
+                            </a>
                         </li>
                     @endforeach
                 @endif
