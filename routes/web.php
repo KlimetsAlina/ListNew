@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/{type}', 'ContentController@getContent')->where(['type' => '|film|serial|book|music|other']);
+Route::get('/{type}', 'ContentController@getContent')->where(['type' => '|film|serial|book|music|other'])->middleware('auth');
 
 Auth::routes();
 
