@@ -57,7 +57,7 @@
                             {{ $item->name }}
                             @if($item->author)- {{$item->author}}  @endif
 
-                            <button type="button" class="close but-list">
+                            <button type="button" class="close btn but-list" data-toggle="modal" data-target="#listModalDelete">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </a>
@@ -68,7 +68,8 @@
             </div>
         </div>
     </div>
-
+    
     @include('modal')
+    @include('modalDelete')
 
 @endsection

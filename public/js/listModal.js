@@ -33,3 +33,13 @@ $('#listModal').on('show.bs.modal', function(event) {
             });
     })
 });
+
+let deleteButtons = document.querySelectorAll('.but-list');
+deleteButtons.forEach(function(element) {
+    element.addEventListener('click', function() {
+        let innerATag = element.parentNode.innerHTML;
+        let endIndex  = innerATag.indexOf('<button');
+        let content   = innerATag.substring(0, endIndex); // Контент (имя и автор) списка, который надо будет вывести в модалке И отправить на Бэк
+        console.log(content);
+    });
+});
