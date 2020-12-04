@@ -16,22 +16,22 @@
                  посмотреть
                 @endswitch
             </h2>
-
-            <ul class="list-group list-group-flush">
+            <div class="list-group">
                 @foreach($content as $item)
                     @if(!$item->pivot->watched)
-                        <li class="list-group-item">
+                        <a href="#" class="list-group-item list-group-item-action">
                             {{ $item->name }}
                             @if($item->author)- {{$item->author}}  @endif
-                            <a class="del_a" onclick="select_content(this);"></a>
-                        </li>
+
+                            <button type="button" class="close but-list">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </a>
                 @endif
             @endforeach
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" data-whatever="0">
-                    +
-                </button>
-            </ul>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" data-whatever="0">+</button>
+            </div>
         </div>
 
         {{--  Просмотренное  --}}
@@ -50,23 +50,22 @@
                     Просмотренное
                 @endswitch
             </h2>
-            <ul class="list-group list-group-flush">
-
+            <div class="list-group">
                 @foreach($content as $item)
                     @if($item->pivot->watched)
-                        <li class="list-group-item">
-
+                        <a href="#" class="list-group-item list-group-item-action">
                             {{ $item->name }}
                             @if($item->author)- {{$item->author}}  @endif
-                            <a class="del_a" onclick="select_content(this);"> -</a>
-                        </li>
+
+                            <button type="button" class="close but-list">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </a>
                 @endif
             @endforeach
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" data-whatever="1">
-                    +
-                </button>
-            </ul>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" data-whatever="1">+</button>
+            </div>
         </div>
     </div>
 
