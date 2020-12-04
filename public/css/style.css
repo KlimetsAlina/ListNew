@@ -1,8 +1,21 @@
 .but-list {
     float: right;
     display: none;
+    z-index: 100;
 }
 
 .list-group-item-action:hover .but-list {
     display: block;
+}
+
+.list-group-item-action {
+    z-index: 0;
+}
+
+#buttonForDelete {
+    background-color: #f4623a;
+}
+
+#deleteContent h5 {
+    color: #f4623a;
 }
