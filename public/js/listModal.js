@@ -16,26 +16,17 @@ $('#listModal').on('show.bs.modal', function(event) {
         bodyFormData.append('name', name);
         bodyFormData.append('author', author);
         bodyFormData.append('watched', watched);
-        bodyFormData.append('type', window.location.pathname);
+        bodyFormData.append('type', (window.location.pathname).substring(1));
         axios({
             method:  'post',
             url:     '/addContent',
             data:    bodyFormData,
             headers: {'Content-Type': 'multipart/form-data'}
         })
-            .then(function(response) {
-                //handle success
-                console.log(response);
-            })
-            .catch(function(response) {
-                //handle error
-                console.log(response);
-            });
     })
 });
 
-var content = '1';
-
+var content       = '';
 let deleteButtons = document.querySelectorAll('.but-list');
 deleteButtons.forEach(function(element) {
     element.addEventListener('click', function() {
@@ -46,8 +37,27 @@ deleteButtons.forEach(function(element) {
 });
 
 $('#listModalDelete').on('show.bs.modal', function(event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var modal  = $(this)
+    var modal = $(this)
     modal.find('.modal-body').text(content)
 
+    let myButton = document.getElementById('buttonForDelete');
+    myButton.addEventListener('click', function(ev) {
+
+        let dash   = content.indexOf(' - '); // TODO уязвимость
+        let name   = (content.substring(0, dash)).trim();
+        let author = (content.substring(dash + 2)).trim();
+
+        var bodyFormData = new FormData();
+        bodyFormData.append('name', name);
+        bodyFormData.append('author', author);
+
+        bodyFormData.append('type', (window.location.pathname).substring(1));
+
+        axios({
+            method:  'post',
+            url:     '/deleteContent',
+            data:    bodyFormData,
+            headers: {'Content-Type': 'multipart/form-data'}
+        })
+    });
 });

@@ -7,10 +7,15 @@ use App\Menu;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class ContentController extends Controller
 {
+    /**
+     * Получение пользовательского контента
+     * конкретного типа
+     * @param $type
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getContent($type)
     {
         $userId      = Auth::id();
@@ -23,33 +28,60 @@ class ContentController extends Controller
         ]);
     }
 
-    public function addContent(Request $request)
+    /**
+     * Добавление контента
+     * @param \Illuminate\Http\Request $request
+     */
+    public function addContent(Request $request): void
     {
-        Log::channel('list')->debug($request);
+        $name   = $request->name;
+        $author = $request->author;
 
-        $id       = 0;
-        $contents = Content::all();
-        foreach ($contents as $item) {
-            if (($item->name === $request->name) && $item->author === $request->author) {
-                $id = $item->id;
-                break;
-            }
-        }
+        $content = $this->findContent($name, $author);
 
-        if ($id) {
-            $content = Content::find($id);
-        } else {
+        if (!$content) {
             $content = new Content();
 
-            $content->name      = $request->name;
-            $content->author    = $request->author;
-            $content->type      = substr($request->type, 1);
+            $content->name      = $name;
+            $content->author    = $author;
+            $content->type      = $request->type;
             $content->something = '{}';
 
             $content->save();
         }
 
-        $user = User::find(Auth::id());
+        $user = (new User)->find(Auth::id());
         $user->contents()->save($content, ['watched' => $request->watched]);
+    }
+
+    /**
+     * Удаление привязки контента
+     * @param \Illuminate\Http\Request $request
+     */
+    public function deleteUserContent(Request $request): void
+    {
+        $content = $this->findContent($request->name, $request->author);
+        $user    = (new User)->find(Auth::id());
+
+        $user->contents()->detach($content->id);
+    }
+
+    /**
+     * Нахождение контента по имени и автору
+     * @param string $name
+     * @param string $author
+     * @return \App\Content|\Illuminate\Database\Eloquent\Builder|mixed|null
+     */
+    public function findContent(string $name, string $author)
+    {
+        $content = Content::whereName($name)->get();
+
+        foreach ($contents = $content as $item) {
+            if ($item->author === $author) {
+                return $item;
+            }
+        }
+
+        return null;
     }
 }

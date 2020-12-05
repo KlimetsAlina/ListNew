@@ -24,3 +24,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/addContent', 'ContentController@addContent');
+Route::post('/deleteContent', 'ContentController@deleteUserContent');
