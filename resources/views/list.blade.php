@@ -53,7 +53,7 @@
             <div class="list-group">
                 @foreach($content as $item)
                     @if($item->pivot->watched)
-                        <a href="#" class="list-group-item list-group-item-action">
+                        <a href="" class="list-group-item list-group-item-action">
                             {{ $item->name }}
                             @if($item->author)- {{$item->author}}  @endif
 
@@ -64,7 +64,10 @@
                 @endif
             @endforeach
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" data-whatever="1">+</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" id="onAddFormOpen" data-watched="1">
+                    +
+                </button>
+
             </div>
         </div>
     </div>
