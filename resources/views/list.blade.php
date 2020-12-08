@@ -16,21 +16,21 @@
                  посмотреть
                 @endswitch
             </h2>
-            <div class="list-group">
+            <div class="list-group" id="d0">
                 @foreach($content as $item)
                     @if(!$item->pivot->watched)
                         <a href="" class="list-group-item list-group-item-action">
                             {{ $item->name }}
                             @if($item->author)- {{$item->author}}  @endif
 
-                            <button type="button" class="close btn but-list" data-toggle="modal" data-target="#listModalDelete">
+                            <button type="button" class="close btn but-list" data-toggle="modal" data-target="#listModalDelete" data-watched="0">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </a>
                 @endif
             @endforeach
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" data-whatever="0">+</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" data-watched="0">+</button>
             </div>
         </div>
 
@@ -50,14 +50,14 @@
                     Просмотренное
                 @endswitch
             </h2>
-            <div class="list-group">
+            <div class="list-group" id="d1">
                 @foreach($content as $item)
                     @if($item->pivot->watched)
                         <a href="" class="list-group-item list-group-item-action">
                             {{ $item->name }}
                             @if($item->author)- {{$item->author}}  @endif
 
-                            <button type="button" class="close btn but-list" data-toggle="modal" data-target="#listModalDelete">
+                            <button type="button" class="close btn but-list" data-toggle="modal" data-target="#listModalDelete" data-watched="1">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </a>

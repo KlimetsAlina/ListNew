@@ -1,4 +1,31 @@
-let watched = '0';
+let typeOfContent = window.location.pathname.substring(1); // TODO: change it
+let watched       = '0';
+
+function setNewEntry(watched) {
+
+    // Optionally the request above could also be done as
+    axios.post('/getContent', {
+            type:    typeOfContent,
+            watched: watched
+        })
+        .then(function(response) {
+            let item      = '';
+            let aTag      = '<a href="" class="list-group-item list-group-item-action">';
+            let aCloseTag = '<button type="button" class="close btn but-list" data-toggle="modal" data-target="#listModalDelete"><span aria-hidden="true">×</span></button></a>';
+
+            response['data'].forEach(function(element) {
+                item = item + (aTag + element['name'] + ' - ' + element['author'] + aCloseTag + '\n');
+            });
+
+            let newContent = item + '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal" id="onAddFormOpen" data-watched="' + watched + '">+</button>';
+
+            $('#' + 'd' + watched).html(newContent);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+}
+
 $('#listModal').on('show.bs.modal', function(event) {
     let button = $(event.relatedTarget); // Button that triggered the modal
     watched    = button.data('watched') // Extract info from data-* attributes
@@ -17,13 +44,13 @@ formForAdd.addEventListener('submit', function(e) {
     bodyFormData.append('name', name);
     bodyFormData.append('author', author);
     bodyFormData.append('watched', watched);
-    bodyFormData.append('type', (window.location.pathname).substring(1)); // TODO: change it
+    bodyFormData.append('type', typeOfContent);
 
     axios.post('/addContent', bodyFormData)
         .then(function() {
                 console.log('Добавлено!');
+                setNewEntry(watched);
                 $('#listModal').trigger('click');
-                return false;
             }
         ).catch((error) => {
         console.log(error.message);
@@ -43,7 +70,10 @@ deleteButtons.forEach(function(element) {
     });
 });
 
-$('#listModalDelete').on('show.bs.modal', function() {
+$('#listModalDelete').on('show.bs.modal', function(event) {
+    let button = $(event.relatedTarget); // Button that triggered the modal
+    watched    = button.data('watched') // Extract info from data-* attributes
+
     let modal = $(this);
     modal.find('.modal-body').text(content)
 
@@ -58,7 +88,7 @@ $('#listModalDelete').on('show.bs.modal', function() {
         let bodyFormData = new FormData();
         bodyFormData.append('name', name);
         bodyFormData.append('author', author);
-        bodyFormData.append('type', (window.location.pathname).substring(1)); // TODO: change it
+        bodyFormData.append('type', typeOfContent);
 
         axios({
             method:  'post',
@@ -68,8 +98,8 @@ $('#listModalDelete').on('show.bs.modal', function() {
         })
             .then(function() {
                 console.log('Удалено');
+                setNewEntry(watched);
                 $('#listModalDelete').trigger('click');
-
             })
             .catch(function(error) {
                 console.log(error);

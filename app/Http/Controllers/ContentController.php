@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Content;
 use App\Menu;
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ContentController extends Controller
 {
@@ -19,7 +21,8 @@ class ContentController extends Controller
     public function getContent($type)
     {
         $userId      = Auth::id();
-        $userContent = User::findOrFail($userId)->contents()->where('type', $type)->get();
+        $userContent = Content::getContent($type, $userId);
+        // $userContent = User::findOrFail($userId)->contents()->where('type', $type)->get();
 
         return view('list', [
             'contentType' => $type,
@@ -37,7 +40,7 @@ class ContentController extends Controller
         $name   = $request->name;
         $author = $request->author;
 
-        $content = $this->findContent($name, $author);
+        $content = (new Content)->findContent($name, $author);
 
         if (!$content) {
             $content = new Content();
@@ -60,28 +63,34 @@ class ContentController extends Controller
      */
     public function deleteUserContent(Request $request): void
     {
-        $content = $this->findContent($request->name, $request->author);
+        $content = (new Content)->findContent($request->name, $request->author);
         $user    = (new User)->find(Auth::id());
 
         $user->contents()->detach($content->id);
     }
 
     /**
-     * Нахождение контента по имени и автору
-     * @param string $name
-     * @param string $author
-     * @return \App\Content|\Illuminate\Database\Eloquent\Builder|mixed|null
+     * Получение колонки контента (просмотренное/непросмотренное)
+     * по типу и юзеру
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function findContent(string $name, string $author)
+    public function getColumnContent(Request $request): JsonResponse
     {
-        $content = Content::whereName($name)->get();
+        $user    = (new User)->find(Auth::id());
+        $content = Content::getContent($request->type, $user->id);
 
-        foreach ($contents = $content as $item) {
-            if ($item->author === $author) {
-                return $item;
+        $result = [];
+
+        foreach ($content as $item) {
+            if ($item->pivot->watched === $request->watched) {
+                $result[] = [
+                    'name'   => $item->name,
+                    'author' => $item->author,
+                ];
             }
         }
 
-        return null;
+        return response()->json($result);
     }
 }

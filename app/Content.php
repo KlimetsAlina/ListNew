@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Content
@@ -45,4 +46,30 @@ class Content extends Model
     {
         return $this->belongsToMany(User::class, 'user_contents', 'contentId', 'userId')->withPivot('watched');
     }
+
+    public static function getContent($type, $userId)
+    {
+        return User::findOrFail($userId)->contents()->where('type', $type)->get();
+    }
+
+    /**
+     * Нахождение контента по имени и автору
+     * @param string $name
+     * @param string $author
+     * @return \App\Content|\Illuminate\Database\Eloquent\Builder|mixed|null
+     */
+    public function findContent(string $name, string $author)
+    {
+        $content = self::whereName($name)->get();
+
+        foreach ($contents = $content as $item) {
+            if ($item->author === $author) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
+
 }
