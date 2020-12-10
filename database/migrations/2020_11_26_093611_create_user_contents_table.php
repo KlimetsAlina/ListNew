@@ -17,6 +17,7 @@ class CreateUserContentsTable extends Migration
             $table->integer('userId');
             $table->integer('contentId');
             $table->boolean('watched');
+            $table->integer('sort')->default(10);
         });
     }
 

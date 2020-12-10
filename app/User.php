@@ -73,6 +73,15 @@ class User extends Authenticatable
      */
     public function contents(): BelongsToMany
     {
-        return $this->belongsToMany(Content::class, 'user_contents', 'userId', 'contentId')->withPivot('watched');
+        return $this->belongsToMany(Content::class, 'user_contents', 'userId', 'contentId')->withPivot(['watched', 'sort']);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->contents()->detach();
+        });
     }
 }
