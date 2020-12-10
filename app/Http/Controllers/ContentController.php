@@ -42,19 +42,21 @@ class ContentController extends Controller
 
         $content = (new Content)->findContent($name, $author);
 
-        if (!$content) {
-            $content = new Content();
-
+        if ($content === null) {
+            $content            = new Content();
             $content->name      = $name;
             $content->author    = $author;
             $content->type      = $request->type;
             $content->something = '{}';
-
             $content->save();
         }
 
         $user = (new User)->find(Auth::id());
-        $user->contents()->save($content, ['watched' => $request->watched]);
+
+        if (!$user->contents()->get()->contains($content->id)) {
+            $user->contents()->save($content, ['watched' => $request->watched]); // TODO подумать над watched
+        }
+        // Если watched различаются, то перезаписать это значение
     }
 
     /**

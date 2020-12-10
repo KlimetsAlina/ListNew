@@ -70,6 +70,4 @@ class Content extends Model
 
         return null;
     }
-
-
 }
