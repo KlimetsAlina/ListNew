@@ -19,3 +19,20 @@
 #deleteContent h5 {
     color: #f4623a;
 }
+
+/*body {*/
+/*    overflow: hidden;*/
+/*}*/
+
+/* TODO: change it */
+.portfolio-box {
+    height: 300px;
+}
+
+#portfolio {
+    width: 90%;
+}
+
+.img-fluid {
+    padding-top: 30%
+}
